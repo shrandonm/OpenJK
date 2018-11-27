@@ -1003,9 +1003,9 @@ void Cmd_Team_f( gentity_t *ent ) {
 		return;
 	}
 
-	// if they are playing a tournament game, count as a loss
-	if ( level.gametype == GT_DUEL
-		&& ent->client->sess.sessionTeam == TEAM_FREE ) {//in a tournament game
+    // if they are playing a tournament game, count as a loss
+    if (sv_automaticDuelQueue.integer && level.gametype == GT_DUEL
+        && ent->client->sess.sessionTeam == TEAM_FREE) {//in a tournament game
 		//disallow changing teams
 		trap->SendServerCommand( ent-g_entities, "print \"Cannot switch teams in Duel\n\"" );
 		return;

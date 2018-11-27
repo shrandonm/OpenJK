@@ -362,6 +362,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL )
 	{
 		G_LogPrintf("Duel Tournament Begun: kill limit %d, win limit: %d\n", fraglimit.integer, duel_fraglimit.integer );
+        G_LogPrintf("Hello steve - 2\n");
 	}
 
 	if ( navCalculatePaths )
@@ -532,6 +533,9 @@ void AddTournamentPlayer( void ) {
 	gclient_t	*client;
 	gclient_t	*nextInLine;
 
+    if (!sv_automaticDuelQueue.integer)
+        return;
+
 	if ( level.numPlayingClients >= 2 ) {
 		return;
 	}
@@ -611,6 +615,9 @@ Make the loser a spectator at the back of the line
 */
 void RemoveTournamentLoser( void ) {
 	int			clientNum;
+
+    if (!sv_automaticDuelQueue.integer)
+        return;
 
 	if ( level.numPlayingClients != 2 ) {
 		return;
