@@ -427,6 +427,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 
     if (g_resetScores.integer)
     {
+        DuelResetWinsLosses();
         trap->Cvar_Set("g_resetScores", "0");
         trap->Cvar_Update(&g_resetScores);
     }
