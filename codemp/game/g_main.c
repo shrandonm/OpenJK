@@ -169,7 +169,6 @@ extern void RemoveAllWP(void);
 extern void BG_ClearVehicleParseParms(void);
 gentity_t *SelectRandomDeathmatchSpawnPoint( void );
 void SP_info_jedimaster_start( gentity_t *ent );
-void DuelResetWinsLosses();
 void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	int					i;
 	vmCvar_t	mapname;
@@ -427,9 +426,18 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	}
 
     G_LogPrintf("*** g_resetScores:%i\n", g_resetScores.integer);
-    if (g_resetScores.integer)
+    if (g_resetScores.integer == 1 || g_resetScores.value > 0.0f)
     {
-        DuelResetWinsLosses();
+        int i;
+        gclient_t *cl;
+
+        for (i = 0; i < sv_maxclients.integer; i++)
+        {
+            cl = level.clients + i;
+            cl->sess.wins = 0;
+            cl->sess.losses = 0;
+        }
+
         trap->Cvar_Set("g_resetScores", "0");
         trap->Cvar_Update(&g_resetScores);
     }
@@ -1444,6 +1452,12 @@ void ExitLevel (void) {
 	// if we are running a tournament map, kick the loser to spectator status,
 	// which will automatically grab the next spectator and restart
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL ) {
+
+        if (g_resetScores.integer == 1 || g_resetScores.value > 0.0f)
+        {
+            DuelResetWinsLosses();
+        }
+
 		if (!DuelLimitHit())
 		{
 			if ( !level.restarted ) {
