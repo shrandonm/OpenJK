@@ -1435,7 +1435,6 @@ void ExitLevel (void) {
 	// if we are running a tournament map, kick the loser to spectator status,
 	// which will automatically grab the next spectator and restart
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL ) {
-		DuelResetWinsLosses();
 		if (!DuelLimitHit())
 		{
 			if ( !level.restarted ) {
@@ -1446,6 +1445,7 @@ void ExitLevel (void) {
 			}
 			return;
 		}
+        DuelResetWinsLosses();
 	}
 
 

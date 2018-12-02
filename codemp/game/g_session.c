@@ -71,8 +71,8 @@ void G_WriteClientSessionData( gclient_t *client )
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.spectatorNum ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.spectatorState ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.spectatorClient ) );
-	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.wins ) );
-	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.losses ) );
+	Q_strcat( s, sizeof( s ), va( "%i ", 0 ) );
+	Q_strcat( s, sizeof( s ), va( "%i ", 0 ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.teamLeader ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.setForce ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.saberLevel ) );
