@@ -362,7 +362,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL )
 	{
 		G_LogPrintf("Duel Tournament Begun: kill limit %d, win limit: %d\n", fraglimit.integer, duel_fraglimit.integer );
-        G_LogPrintf("Hello steve - 2\n");
+        G_LogPrintf("\n\n\n##################\nHello steve - 3\n##################\n\n\n");
 	}
 
 	if ( navCalculatePaths )
