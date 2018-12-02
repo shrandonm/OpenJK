@@ -229,6 +229,13 @@ static void SV_Map_f( void ) {
 }
 
 
+static void SV_Live()
+{
+    SV_MapRestart_f();
+    Cvar_Set("g_resetScores", "1");
+    Cvar_Update(&g_resetScores);
+}
+
 /*
 ================
 SV_MapRestart_f
@@ -1942,6 +1949,7 @@ void SV_AddOperatorCommands( void ) {
 	Cmd_AddCommand ("systeminfo", SV_Systeminfo_f, "Prints the systeminfo variables that are replicated to clients" );
 	Cmd_AddCommand ("dumpuser", SV_DumpUser_f, "Prints the userinfo for a given userid" );
 	Cmd_AddCommand ("map_restart", SV_MapRestart_f, "Restart the current map" );
+    Cmd_AddCommand ("live", SV_Live, "Restarts the map and resets the scores");
 	Cmd_AddCommand ("sectorlist", SV_SectorList_f);
 	Cmd_AddCommand ("map", SV_Map_f, "Load a new map with cheats disabled" );
 	Cmd_SetCommandCompletionFunc( "map", SV_CompleteMapName );

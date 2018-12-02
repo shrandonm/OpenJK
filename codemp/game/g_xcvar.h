@@ -124,6 +124,7 @@ XCVAR_DEF( g_powerDuelStartHealth,		"150",			NULL,				CVAR_ARCHIVE,									qtru
 XCVAR_DEF( g_privateDuel,				"1",			NULL,				CVAR_ARCHIVE,									qtrue )
 XCVAR_DEF( g_randFix,					"1",			NULL,				CVAR_ARCHIVE,									qtrue )
 XCVAR_DEF( g_restarted,					"0",			NULL,				CVAR_ROM,										qfalse )
+XCVAR_DEF( g_resetScores,               "0",            NULL,               CVAR_ROM,                                       qfalse)
 XCVAR_DEF( g_saberBladeFaces,			"1",			NULL,				CVAR_NONE,										qtrue )
 XCVAR_DEF( g_saberDamageScale,			"1",			NULL,				CVAR_ARCHIVE,									qtrue )
 #ifdef DEBUG_SABER_BOX

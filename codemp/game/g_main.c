@@ -424,6 +424,12 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			SP_info_jedimaster_start( ent );
 		}
 	}
+
+    if (g_resetScores.integer)
+    {
+        trap->Cvar_Set("g_resetScores", "0");
+        trap->Cvar_Update(&g_resetScores);
+    }
 }
 
 
