@@ -229,13 +229,6 @@ static void SV_Map_f( void ) {
 }
 
 
-static void SV_Live()
-{
-    SV_MapRestart_f();
-    Cvar_Set("g_resetScores", "1");
-    Cvar_Update(&g_resetScores);
-}
-
 /*
 ================
 SV_MapRestart_f
@@ -380,6 +373,12 @@ static void SV_MapRestart_f( void ) {
 }
 
 //===============================================================
+
+static void SV_Live()
+{
+    SV_MapRestart_f();
+    Cvar_Set("g_resetScores", "1");
+}
 
 /*
 ==================
