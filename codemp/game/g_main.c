@@ -159,20 +159,20 @@ void G_CacheMapname( const vmCvar_t *mapname )
 	Com_sprintf( level.rawmapname, sizeof( level.rawmapname ), "maps/%s", mapname->string );
 }
 
-void DuelResetWinsLosses(void)
+void DuelResetWinsLosses(qboolean ignoreConnectionStatus)
 {
     int i;
     gclient_t *cl;
 
     for (i = 0; i < sv_maxclients.integer; i++) {
         cl = level.clients + i;
-        if (cl->pers.connected != CON_CONNECTED)
+        if (!ignoreConnectionStatus && cl->pers.connected != CON_CONNECTED)
         {
-            G_LogPrintf("DuelResetWinsLosses skipping client %i due to not being connected", i);
+            G_LogPrintf("DuelResetWinsLosses skipping client %i due to not being connected\n", i);
             continue;
         }
 
-        G_LogPrintf("DuelResetWinsLosses reset client %i scores", i);
+        G_LogPrintf("DuelResetWinsLosses reset client %i scores\n", i);
 
         cl->sess.wins = 0;
         cl->sess.losses = 0;
@@ -448,7 +448,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
     G_LogPrintf("g_resetScores == %i", g_resetScores.integer);
     if (g_resetScores.integer)
     {
-        DuelResetWinsLosses();
+        DuelResetWinsLosses(qtrue);
 
         trap->Cvar_Set("g_resetScores", "0");
         trap->Cvar_Update(&g_resetScores);
@@ -1462,7 +1462,7 @@ void ExitLevel (void) {
 			}
 			return;
 		}
-        DuelResetWinsLosses();
+        DuelResetWinsLosses(qfalse);
 	}
 
 
