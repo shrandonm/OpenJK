@@ -66,6 +66,12 @@ void G_WriteClientSessionData( gclient_t *client )
 			IP[i] = 1;
 	}
 
+    if (g_resetScores.integer)
+    {
+        client->sess.wins = 0;
+        client->sess.losses = 0;
+    }
+
 	// Make sure there is no space on the last entry
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.sessionTeam ) );
 	Q_strcat( s, sizeof( s ), va( "%i ", client->sess.spectatorNum ) );
@@ -278,9 +284,17 @@ void G_WriteSessionData( void ) {
 
 	trap->Cvar_Set( "session", va("%i", level.gametype) );
 
+    G_LogPrintf("G_WriteSessionData - g_resetScores == %i\n", g_resetScores.integer);
+   
 	for ( i = 0 ; i < level.maxclients ; i++ ) {
 		if ( level.clients[i].pers.connected == CON_CONNECTED ) {
 			G_WriteClientSessionData( &level.clients[i] );
 		}
 	}
+
+    if (g_resetScores.integer)
+    {
+        trap->Cvar_Set("g_resetScores", "0");
+        trap->Cvar_Update(&g_resetScores);
+    }
 }

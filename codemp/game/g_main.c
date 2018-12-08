@@ -444,18 +444,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			SP_info_jedimaster_start( ent );
 		}
 	}
-
-    G_LogPrintf("g_resetScores == %i", g_resetScores.integer);
-    if (g_resetScores.integer)
-    {
-        DuelResetWinsLosses(qtrue);
-
-        trap->Cvar_Set("g_resetScores", "0");
-        trap->Cvar_Update(&g_resetScores);
-
-        G_LogPrintf("post update g_resetScores == %i", g_resetScores.integer);
-    }
-
 }
 
 
