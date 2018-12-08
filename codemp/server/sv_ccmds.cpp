@@ -376,8 +376,8 @@ static void SV_MapRestart_f( void ) {
 
 static void SV_Live()
 {
-    SV_MapRestart_f();
     Cvar_Set("g_resetScores", "1");
+    SV_MapRestart_f();
 }
 
 /*

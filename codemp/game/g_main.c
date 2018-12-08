@@ -424,23 +424,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			SP_info_jedimaster_start( ent );
 		}
 	}
-
-    G_LogPrintf("*** g_resetScores:%i\n", g_resetScores.integer);
-    if (g_resetScores.integer == 1 || g_resetScores.value > 0.0f)
-    {
-        int i;
-        gclient_t *cl;
-
-        for (i = 0; i < sv_maxclients.integer; i++)
-        {
-            cl = level.clients + i;
-            cl->sess.wins = 0;
-            cl->sess.losses = 0;
-        }
-
-        trap->Cvar_Set("g_resetScores", "0");
-        trap->Cvar_Update(&g_resetScores);
-    }
 }
 
 
@@ -1453,9 +1436,12 @@ void ExitLevel (void) {
 	// which will automatically grab the next spectator and restart
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL ) {
 
-        if (g_resetScores.integer == 1 || g_resetScores.value > 0.0f)
+        if (g_resetScores.integer)
         {
             DuelResetWinsLosses();
+
+            trap->Cvar_Set("g_resetScores", "0");
+            trap->Cvar_Update(&g_resetScores);
         }
 
 		if (!DuelLimitHit())
