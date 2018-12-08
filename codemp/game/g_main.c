@@ -159,6 +159,26 @@ void G_CacheMapname( const vmCvar_t *mapname )
 	Com_sprintf( level.rawmapname, sizeof( level.rawmapname ), "maps/%s", mapname->string );
 }
 
+void DuelResetWinsLosses(void)
+{
+    int i;
+    gclient_t *cl;
+
+    for (i = 0; i < sv_maxclients.integer; i++) {
+        cl = level.clients + i;
+        if (cl->pers.connected != CON_CONNECTED)
+        {
+            G_LogPrintf("DuelResetWinsLosses skipping client %i due to not being connected", i);
+            continue;
+        }
+
+        G_LogPrintf("DuelResetWinsLosses reset client %i scores", i);
+
+        cl->sess.wins = 0;
+        cl->sess.losses = 0;
+    }
+}
+
 /*
 ============
 G_InitGame
@@ -362,7 +382,7 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL )
 	{
 		G_LogPrintf("Duel Tournament Begun: kill limit %d, win limit: %d\n", fraglimit.integer, duel_fraglimit.integer );
-        G_LogPrintf("\n\n\n##################\nHello steve - 4\n##################\n\n\n");
+        G_LogPrintf("\n\n\n##################\nHello steve - 5\n##################\n\n\n");
 	}
 
 	if ( navCalculatePaths )
@@ -424,6 +444,18 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			SP_info_jedimaster_start( ent );
 		}
 	}
+
+    G_LogPrintf("g_resetScores == %i", g_resetScores.integer);
+    if (g_resetScores.integer)
+    {
+        DuelResetWinsLosses();
+
+        trap->Cvar_Set("g_resetScores", "0");
+        trap->Cvar_Update(&g_resetScores);
+
+        G_LogPrintf("post update g_resetScores == %i", g_resetScores.integer);
+    }
+
 }
 
 
@@ -1401,22 +1433,6 @@ qboolean DuelLimitHit(void)
 	return qfalse;
 }
 
-void DuelResetWinsLosses(void)
-{
-	int i;
-	gclient_t *cl;
-
-	for ( i=0 ; i< sv_maxclients.integer ; i++ ) {
-		cl = level.clients + i;
-		if ( cl->pers.connected != CON_CONNECTED ) {
-			continue;
-		}
-
-		cl->sess.wins = 0;
-		cl->sess.losses = 0;
-	}
-}
-
 /*
 =============
 ExitLevel
@@ -1435,14 +1451,6 @@ void ExitLevel (void) {
 	// if we are running a tournament map, kick the loser to spectator status,
 	// which will automatically grab the next spectator and restart
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL ) {
-
-        if (g_resetScores.integer)
-        {
-            DuelResetWinsLosses();
-
-            trap->Cvar_Set("g_resetScores", "0");
-            trap->Cvar_Update(&g_resetScores);
-        }
 
 		if (!DuelLimitHit())
 		{
