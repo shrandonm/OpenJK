@@ -19,6 +19,7 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 ===========================================================================
 */
 
+#include "qcommon/q_version.h"
 #include "sys_local.h"
 #include <direct.h>
 #include <io.h>
@@ -37,7 +38,7 @@ static UINT timerResolution = 0;
 Sys_Basename
 ==============
 */
-const char *Sys_Basename( char *path )
+const char *Sys_Basename( const char *path )
 {
 	static char base[ MAX_OSPATH ] = { 0 };
 	int length;
@@ -67,7 +68,7 @@ const char *Sys_Basename( char *path )
 Sys_Dirname
 ==============
 */
-const char *Sys_Dirname( char *path )
+const char *Sys_Dirname( const char *path )
 {
 	static char dir[ MAX_OSPATH ] = { 0 };
 	int length;
@@ -156,7 +157,7 @@ char *Sys_GetCurrentUser( void )
 */
 char *Sys_DefaultHomePath( void )
 {
-#if defined(_PORTABLE_VERSION)
+#if defined(BUILD_PORTABLE)
 	Com_Printf( "Portable install requested, skipping homepath support\n" );
 	return NULL;
 #else
