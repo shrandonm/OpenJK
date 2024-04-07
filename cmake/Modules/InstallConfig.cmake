@@ -17,7 +17,7 @@
 #============================================================================
 
 # Subdirectories to package JK2 and JKA into
-set(JKAInstallDir "JediAcademy")
+set(JKAInstallDir "GameData")
 set(JK2InstallDir "JediOutcast")
 
 # Install components
