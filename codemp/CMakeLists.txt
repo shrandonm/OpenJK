@@ -211,6 +211,7 @@ if(BuildMPEngine OR BuildMPDed)
 		"${MPDir}/botlib/botlib.h"
 		"${MPDir}/game/g_public.h"
 		"${MPDir}/game/surfaceflags.h"
+		"${MPDir}/http/httplib.h"
 		)
 	source_group("game" FILES ${MPEngineAndDedGameFiles})
 	set(MPEngineAndDedFiles ${MPEngineAndDedFiles} ${MPEngineAndDedGameFiles})
