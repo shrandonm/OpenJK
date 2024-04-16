@@ -7,14 +7,12 @@ extern "C" {
 #endif
 	void Log(const char* format_str, ...)
 	{
-		static const char* const prefix = "%d ";
-		static const size_t prefix_length = 3;
 		va_list ap;
-
-		printf("%lld ", (long long int)time(0));
+		printf("[JADL] ");
 		va_start(ap, format_str);
 		vprintf(format_str, ap);
 		va_end(ap);
+		printf("\n");
 	}
 
 	void JADL_Init()
