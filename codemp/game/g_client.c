@@ -2739,6 +2739,7 @@ void ClientBegin( int clientNum, qboolean allowTeamReset ) {
 		}
 	}
 	G_LogPrintf( "ClientBegin: %i\n", clientNum );
+	JADL_OnClientConnected(userinfo);
 
 	// count current clients and rank for scoreboard
 	CalculateRanks();

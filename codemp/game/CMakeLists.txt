@@ -189,6 +189,14 @@ set(MPGameBotlibFiles
 source_group("botlib" FILES ${MPGameBotlibFiles})
 set(MPGameFiles ${MPGameFiles} ${MPGameBotlibFiles})
 
+set(JADLFiles
+	"${MPDir}/jadl/jadl.h"
+	"${MPDir}/jadl/jadl.cpp"
+	"${MPDir}/jadl/http/httplib.h"
+	)
+source_group("jadl" FILES ${JADLFiles})
+set(MPGameFiles ${MPGameFiles} ${JADLFiles})
+
 set(MPGameG2Files
 	"${MPDir}/ghoul2/G2.h"
 	)

@@ -34,6 +34,9 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 NORETURN_PTR void (*Com_Error)( int level, const char *error, ... );
 void (*Com_Printf)( const char *msg, ... );
 
+#include "jadl/jadl.h"
+
+
 level_locals_t	level;
 
 int		eventClearTime = 0;
@@ -199,6 +202,8 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	vmCvar_t	mapname;
 	vmCvar_t	ckSum;
 	char serverinfo[MAX_INFO_STRING] = {0};
+
+	JADL_Init();
 
 	Rand_Init( randomSeed );
 	srand( randomSeed );
@@ -392,7 +397,6 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL )
 	{
 		G_LogPrintf("Duel Tournament Begun: kill limit %d, win limit: %d\n", fraglimit.integer, duel_fraglimit.integer );
-        G_LogPrintf("\n\n\n##################\nJADL Loaded\n##################\n\n\n");
 	}
 
 	if ( navCalculatePaths )
@@ -454,6 +458,8 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 			SP_info_jedimaster_start( ent );
 		}
 	}
+
+	JADL_OnMapLoaded(mapname.string, JADL_Context_InitialLoad);
 }
 
 
@@ -1446,6 +1452,7 @@ void ExitLevel (void) {
 	int		i;
 	gclient_t *cl;
 
+
 	// if we are running a tournament map, kick the loser to spectator status,
 	// which will automatically grab the next spectator and restart
 	if ( level.gametype == GT_DUEL || level.gametype == GT_POWERDUEL ) {
@@ -1504,7 +1511,7 @@ void ExitLevel (void) {
 			level.clients[i].pers.connected = CON_CONNECTING;
 		}
 	}
-
+	JADL_OnMapConcluded(level.mapname);
 }
 
 /*

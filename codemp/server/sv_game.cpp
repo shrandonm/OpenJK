@@ -32,7 +32,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 #include "qcommon/timing.h"
 #include "NPCNav/navigator.h"
 #include "sv_gameapi.h"
-#include "http/httplib.h"
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 
 // these functions must be used instead of pointer arithmetic, because
@@ -139,18 +138,6 @@ void SV_InitGameProgs( void ) {
 	SV_BindGame();
 
 	SV_InitGame( qfalse );
-
-	httplib::Client client("http://45.77.48.46");
-	httplib::Result response = client.Get("/api/test/HelloWorld");
-	if (response)
-	{
-		Com_Printf("Status: %i\n", response->status);
-		Com_Printf("Body: %s\n", response->body.c_str());
-	}
-	else
-	{
-		Com_Printf("Response is null\n");
-	}
 }
 
 
